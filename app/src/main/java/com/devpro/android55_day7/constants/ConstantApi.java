@@ -1,4 +1,4 @@
-package com.devpro.android55_day7;
+package com.devpro.android55_day7.constants;
 
 public class ConstantApi {
     public static final String BASE_URL = "https://dummyjson.com/";
