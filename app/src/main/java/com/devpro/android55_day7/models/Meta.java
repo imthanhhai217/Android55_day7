@@ -17,6 +17,7 @@ public class Meta {
     @SerializedName("qrCode")
     @Expose
     private String qrCode;
+    private boolean isEnable;
 
     public String getCreatedAt() {
         return createdAt;
