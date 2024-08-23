@@ -1,6 +1,6 @@
 package com.devpro.android55_day7.networks;
 
-import com.devpro.android55_day7.ConstantApi;
+import com.devpro.android55_day7.constants.ConstantApi;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
