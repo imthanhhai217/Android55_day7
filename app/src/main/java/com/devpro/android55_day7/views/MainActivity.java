@@ -9,14 +9,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.devpro.android55_day7.R;
 import com.devpro.android55_day7.interfaces.GetAllProductView;
-import com.devpro.android55_day7.models.AllProductResponse;
+import com.devpro.android55_day7.models.categories.CategoryModel;
+import com.devpro.android55_day7.models.categories.CategoryObj;
+import com.devpro.android55_day7.models.products.AllProductResponse;
 import com.devpro.android55_day7.networks.DummyService;
-import com.devpro.android55_day7.networks.RetrofitClient;
 import com.devpro.android55_day7.presenters.DummyPresenter;
+import com.devpro.android55_day7.utils.ApiState;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements GetAllProductView {
     private static final String TAG = "MainActivity";
@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements GetAllProductView
     private EditText edtSearch;
     private Button btnSearch;
     private DummyPresenter dummyPresenter;
+    private ApiState apiStateAllProduct = ApiState.NONE;
+    private ApiState apiStateAllCategory = ApiState.NONE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,18 +48,44 @@ public class MainActivity extends AppCompatActivity implements GetAllProductView
             }
         });
 
+
         dummyPresenter.getAllProduct();
+        apiStateAllProduct = ApiState.CALLED;
         dummyPresenter.getAllCategories();
+        apiStateAllCategory = ApiState.CALLED;
     }
 
     @Override
     public void onGetAllProductSuccess(AllProductResponse response) {
+        apiStateAllProduct = ApiState.SUCCESS;
         Log.d(TAG, "onGetAllProductSuccess: "+response.getProducts().get(0).toString());
+        dummyPresenter.filterProductByCategory(apiStateAllProduct,apiStateAllCategory);
     }
 
     @Override
     public void onGetAllProductFailed(String message) {
+        apiStateAllProduct = ApiState.FAILED;
         Log.d(TAG, "onGetAllProductFailed: "+message);
+        dummyPresenter.filterProductByCategory(apiStateAllProduct,apiStateAllCategory);
+    }
+
+    @Override
+    public void onAllCategorySuccess(ArrayList<CategoryObj> response) {
+        apiStateAllCategory = ApiState.SUCCESS;
+        Log.d(TAG, "onAllCategorySuccess: "+response.size());
+        dummyPresenter.filterProductByCategory(apiStateAllProduct,apiStateAllCategory);
+    }
+
+    @Override
+    public void onAllCategoryFailed(String message) {
+        apiStateAllCategory = ApiState.FAILED;
+        Log.d(TAG, "onAllCategoryFailed: "+message);
+        dummyPresenter.filterProductByCategory(apiStateAllProduct,apiStateAllCategory);
+    }
+
+    @Override
+    public void onResponseListCategoryModel(ArrayList<CategoryModel> data) {
+        Log.d(TAG, "onResponseListCategoryModel: "+data.toString());
     }
 
     @Override

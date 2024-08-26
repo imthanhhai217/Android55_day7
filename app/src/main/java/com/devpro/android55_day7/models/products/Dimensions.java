@@ -1,5 +1,5 @@
 
-package com.devpro.android55_day7.models;
+package com.devpro.android55_day7.models.products;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

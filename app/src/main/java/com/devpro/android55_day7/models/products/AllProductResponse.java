@@ -1,5 +1,5 @@
 
-package com.devpro.android55_day7.models;
+package com.devpro.android55_day7.models.products;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
